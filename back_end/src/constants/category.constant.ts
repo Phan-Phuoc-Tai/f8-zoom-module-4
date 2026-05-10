@@ -1,0 +1,9 @@
+export const CATEGORY_ERROR = {
+  NOT_FOUND: "Không tìm thấy danh mục",
+};
+export const CATEGORY_SUCCESS = {
+  CREATE: "Tạo mới danh mục thành công",
+  UPDATE: "Cập nhật danh mục thành công",
+  DELETE: "Xoá danh mục thành công",
+  FIND_ALL: "Lấy danh sách danh mục thành công",
+};
