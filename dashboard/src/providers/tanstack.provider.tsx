@@ -13,7 +13,11 @@ export default function TanstackProviders({
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        defaultOptions: { queries: {} },
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 60 * 5,
+          },
+        },
       }),
   );
 

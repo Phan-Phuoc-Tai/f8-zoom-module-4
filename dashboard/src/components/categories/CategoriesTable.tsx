@@ -5,32 +5,35 @@ import moment from "moment";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORY_CACHE } from "@/caches/category.cache";
 import { categoryService } from "@/services/category.service";
-
-import { Edit, Trash2 } from "lucide-react";
+import ActionCategory from "./ActionCategory";
+import { useSearchParams } from "next/navigation";
 export default function CategoriesTable() {
-  const { data: categories } = useQuery({
-    queryKey: CATEGORY_CACHE.LIST,
-    queryFn: categoryService.findAll,
+  const searchParams = useSearchParams();
+  //kết quả từ searchParams: ["page", "1"] chuyển đổi thành {page : "1"}
+  const filters = Object.fromEntries(searchParams);
+  const { data } = useQuery({
+    queryKey: [...CATEGORY_CACHE.LIST, filters],
+    queryFn: () => categoryService.getCategories(filters),
   });
+  const categories = data?.data;
 
   return (
     <TableBody className="text-left">
-      {categories?.map((category) => {
+      {categories?.map((category, index) => {
         //Vì danh mục phụ thuộc trả về số nên muốn convert sang chữ cho admin dễ quản lý
         const parent = categories.find(
           (data) => +data.id === category.parentId,
         );
         return (
           <TableRow key={category.id}>
-            <TableCell>{category.id}</TableCell>
+            <TableCell>{index + 1}</TableCell>
             <TableCell>{category.name}</TableCell>
             <TableCell>{parent?.name ?? "-"}</TableCell>
             <TableCell>
               {moment(category.updatedAt).format("YYYY/MM/DD HH:mm:ss")}
             </TableCell>
-            <TableCell className="flex items-center gap-3 justify-end ">
-              <Edit className="w-5 h-5 cursor-pointer" />
-              <Trash2 className="w-5 h-5 cursor-pointer text-red-400" />
+            <TableCell className="flex items-center gap-3 justify-center">
+              <ActionCategory id={category.id} />
             </TableCell>
           </TableRow>
         );

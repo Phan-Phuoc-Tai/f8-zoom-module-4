@@ -17,11 +17,16 @@ const successResponse = (
   data: unknown,
   message: string,
   status = 200,
+  meta?: {
+    total: number;
+    currentPage: number;
+  },
 ) => {
   response.status(status).json({
     success: true,
     message,
     data,
+    meta,
   });
 };
 

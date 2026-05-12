@@ -1,4 +1,5 @@
-export type CategoryData = {
-  name: string;
-  parent: string;
+export type CategoryQuery = {
+  q: string;
+  page: number;
+  limit: number;
 };

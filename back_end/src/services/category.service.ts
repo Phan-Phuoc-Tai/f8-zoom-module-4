@@ -1,23 +1,26 @@
 import { CATEGORY_ERROR } from "../constants/category.constant";
+import { BadRequestException } from "../exceptions/badRequest.exception";
 import { NotFoundException } from "../exceptions/notFound.exception";
+import {
+  CategoryCreateInput,
+  CategoryFindManyArgs,
+  CategoryWhereInput,
+} from "../generated/prisma/models";
 import { prisma } from "../lib/prisma";
-import { CategoryData } from "../types/category.type";
+import { CategoryQuery } from "../types/category.type";
 
 export const categoryService = {
-  async create(categoryData: CategoryData) {
-    const category = await this.findCategoryByName(categoryData.parent);
-
-    if (!category) {
-      throw new NotFoundException(CATEGORY_ERROR.NOT_FOUND);
+  async create(categoryData: CategoryCreateInput) {
+    try {
+      const category = await prisma.category.create({
+        data: categoryData,
+      });
+      return category;
+    } catch {
+      throw new BadRequestException(CATEGORY_ERROR.CREATE_FAILED);
     }
-    return prisma.category.create({
-      data: {
-        name: categoryData.name,
-        parentId: category.id,
-      },
-    });
   },
-  async update(categoryData: CategoryData, id: number) {
+  async update(categoryData: CategoryCreateInput, id: number) {
     const category = await this.findCategoryById(id);
     if (!category) {
       throw new NotFoundException(CATEGORY_ERROR.NOT_FOUND);
@@ -36,8 +39,8 @@ export const categoryService = {
       where: { id },
     });
   },
-  findCategoryById(id: number) {
-    return prisma.category.findUnique({
+  async findCategoryById(id: number) {
+    return await prisma.category.findUnique({
       where: { id },
     });
   },
@@ -46,7 +49,30 @@ export const categoryService = {
       where: { name },
     });
   },
-  findAll() {
-    return prisma.category.findMany();
+  findAll(query: CategoryQuery) {
+    const { page = 1, limit = 10, q = "" } = query;
+    const filters = {} as CategoryWhereInput;
+    if (q) {
+      filters.name = {
+        contains: q,
+        mode: "insensitive",
+      };
+    }
+    const options = {
+      where: {
+        ...filters,
+      },
+      orderBy: {
+        id: "desc",
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+    } as CategoryFindManyArgs;
+    return Promise.all([
+      prisma.category.findMany(options),
+      prisma.category.count({
+        where: filters,
+      }),
+    ]);
   },
 };

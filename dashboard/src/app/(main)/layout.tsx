@@ -13,7 +13,7 @@ export default function MainLayout({
     <div className="main-layout flex">
       <TanstackProviders>
         <SideBar />
-        <main className="main-layout flex-1">
+        <main className="main-layout flex-1 flex flex-col">
           <Header />
           {children}
         </main>

@@ -1,6 +1,6 @@
 export type CategoryData = {
   name: string;
-  parent?: string | null;
+  parentId: string | null;
 };
 
 export type Category = {

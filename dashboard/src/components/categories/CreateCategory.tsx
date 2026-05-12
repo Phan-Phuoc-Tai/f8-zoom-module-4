@@ -1,11 +1,11 @@
 "use client";
-import AddForm from "@/components/categories/AddForm";
+import CreateForm from "@/components/categories/CreateForm";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_CONFIG } from "@/constants/category.constant";
 import { useState } from "react";
 
-export default function AddCategory() {
+export default function CreateCategory() {
   const [open, setOpen] = useState<boolean>(false);
   const ADD_FORM = CATEGORY_CONFIG.MODAL.ADD_FORM;
   return (
@@ -17,7 +17,7 @@ export default function AddCategory() {
         {CATEGORY_CONFIG.ADD_BTN}
       </Button>
       <Modal open={open} onClose={() => setOpen(false)} title={ADD_FORM.TITLE}>
-        <AddForm onClose={() => setOpen(false)} />
+        <CreateForm onClose={() => setOpen(false)} />
       </Modal>
     </div>
   );
