@@ -1,11 +1,16 @@
 export type CategoryData = {
   name: string;
-  parentId: string | null;
+  status: boolean;
 };
 
 export type Category = {
-  id: string;
+  id: string | null;
   name: string;
-  parentId: number;
-  updatedAt: string;
+  status: boolean;
+  updatedAt?: string;
+};
+
+export type CategoriesResponse = {
+  data: Category[];
+  totalPage: number;
 };

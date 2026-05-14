@@ -242,7 +242,7 @@ export type UserGroupByOutputType = {
   addressId: number | null
   birthday: Date | null
   gender: string | null
-  role: string | null
+  role: string
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -281,7 +281,7 @@ export type UserWhereInput = {
   addressId?: Prisma.IntNullableFilter<"User"> | number | null
   birthday?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -297,7 +297,7 @@ export type UserOrderByWithRelationInput = {
   addressId?: Prisma.SortOrderInput | Prisma.SortOrder
   birthday?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  role?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -316,7 +316,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   addressId?: Prisma.IntNullableFilter<"User"> | number | null
   birthday?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }, "id" | "secretId" | "email">
@@ -332,7 +332,7 @@ export type UserOrderByWithAggregationInput = {
   addressId?: Prisma.SortOrderInput | Prisma.SortOrder
   birthday?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  role?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -356,7 +356,7 @@ export type UserScalarWhereWithAggregatesInput = {
   addressId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   birthday?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   gender?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  role?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  role?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -371,7 +371,7 @@ export type UserCreateInput = {
   addressId?: number | null
   birthday?: Date | string | null
   gender?: string | null
-  role?: string | null
+  role?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -387,7 +387,7 @@ export type UserUncheckedCreateInput = {
   addressId?: number | null
   birthday?: Date | string | null
   gender?: string | null
-  role?: string | null
+  role?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -402,7 +402,7 @@ export type UserUpdateInput = {
   addressId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -418,7 +418,7 @@ export type UserUncheckedUpdateInput = {
   addressId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -434,7 +434,7 @@ export type UserCreateManyInput = {
   addressId?: number | null
   birthday?: Date | string | null
   gender?: string | null
-  role?: string | null
+  role?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -449,7 +449,7 @@ export type UserUpdateManyMutationInput = {
   addressId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -465,7 +465,7 @@ export type UserUncheckedUpdateManyInput = {
   addressId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -528,8 +528,12 @@ export type UserSumOrderByAggregateInput = {
   addressId?: Prisma.SortOrder
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -622,7 +626,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     addressId: number | null
     birthday: Date | null
     gender: string | null
-    role: string | null
+    role: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>

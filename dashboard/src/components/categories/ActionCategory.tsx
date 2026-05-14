@@ -7,6 +7,7 @@ import UpdateForm from "./UpdateForm";
 import { CATEGORY_CONFIG } from "@/constants/category.constant";
 import AlertModal from "../modals/AlertModal";
 import DeleteCategory from "./DeleteCategory";
+
 type Props = {
   id: string;
 };

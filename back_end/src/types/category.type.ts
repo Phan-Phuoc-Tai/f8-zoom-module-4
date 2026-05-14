@@ -1,5 +1,5 @@
 export type CategoryQuery = {
   q: string;
-  page: number;
-  limit: number;
+  page: number | string;
+  limit: number | string;
 };

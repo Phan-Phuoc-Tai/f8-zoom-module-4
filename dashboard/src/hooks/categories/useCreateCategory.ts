@@ -13,11 +13,11 @@ export const useCreateCategory = () => {
       return categoryService.create(categoryData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: CATEGORY_CACHE.LIST });
+      queryClient.invalidateQueries({ queryKey: CATEGORY_CACHE.LIST_ALL });
     },
   });
   //Làm mới dữ liệu và đồng bộ thông báo với toast
-  const mutateWithToast = (
+  const createCategory = (
     categoryData: CategoryData,
     callback?: () => void,
   ) => {
@@ -34,6 +34,6 @@ export const useCreateCategory = () => {
   };
   return {
     ...mutation,
-    mutateWithToast,
+    createCategory,
   };
 };

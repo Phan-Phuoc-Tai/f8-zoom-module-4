@@ -1,10 +1,11 @@
 "use client";
-import { CONFIG } from "@/constants/config.constant";
+
+import { DASHBOARD_CONFIG } from "@/constants/dashboard.constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Nav() {
-  const SIDE_BAR = CONFIG.SIDE_BAR;
+  const SIDE_BAR = DASHBOARD_CONFIG.SIDE_BAR;
   const pathname = usePathname();
   const className = (href: string): string => {
     const isActive = pathname === href;

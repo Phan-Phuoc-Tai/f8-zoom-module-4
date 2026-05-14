@@ -7,7 +7,8 @@
 - Thêm mới danh mục ✅
 - Xem chi tiết danh mục ✅
 - Sửa danh mục ✅
-- Xoá danh mục
-- Filter tất cả danh mục
+- Xoá danh mục ✅
+- Filter tất cả danh mục:
+  - Filter tên danh mục ✅
   - Filter theo từng _trường_
   - Xoá tất cả điều kiện lọc

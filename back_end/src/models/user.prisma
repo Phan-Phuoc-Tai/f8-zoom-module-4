@@ -9,7 +9,7 @@ model User {
   addressId  Int?
   birthday   DateTime?
   gender     String?   @db.VarChar(10)
-  role       String?   @default("customer") @db.VarChar(10)
+  role       String    @default("customer") @db.VarChar(10)
   createdAt  DateTime  @default(now()) @db.Timestamp()
   updatedAt  DateTime  @default(now()) @updatedAt @db.Timestamp()
 

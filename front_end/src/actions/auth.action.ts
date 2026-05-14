@@ -63,13 +63,13 @@ const saveTokenInCookieAction = async (
   //save 1h
   cookieStore.set("accessToken", accessToken, {
     httpOnly: true,
-    maxAge: CACHE_TTL.token,
+    maxAge: CACHE_TTL.TOKEN_1H,
   });
 
   //save 1h because refreshToken rotation
   cookieStore.set("refreshToken", refreshToken, {
     httpOnly: true,
-    maxAge: CACHE_TTL.token,
+    maxAge: CACHE_TTL.TOKEN_1H,
   });
 };
 

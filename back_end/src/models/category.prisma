@@ -1,7 +1,7 @@
 model Category {
   id        Int      @id @default(autoincrement())
   name      String   @unique @db.VarChar(100)
-  parentId  Int?
+  status    Boolean
   createdAt DateTime @default(now()) @db.Timestamp()
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
 

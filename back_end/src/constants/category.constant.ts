@@ -8,4 +8,5 @@ export const CATEGORY_SUCCESS = {
   DELETE: "Xoá danh mục thành công",
   FIND_ALL: "Lấy danh sách danh mục thành công",
   FIND: "Lấy danh mục thành công",
+  FIND_PARENTS: "Lấy danh sách danh mục gốc thành công",
 };

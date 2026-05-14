@@ -21,7 +21,7 @@ export const categoryService = {
     const { data } = response.data;
     return data;
   },
-  async getCategories(filters: Record<string, string>): Promise<{
+  async getCategories(filters: { [k: string]: string }): Promise<{
     data: Category[];
     totalPage: number;
     currentPage: number;
@@ -30,11 +30,9 @@ export const categoryService = {
     const response = await axiosInstance.get(
       `/categories?${params.toString()}`,
     );
-
     const { data, meta } = response.data;
-    const { limit, total, currentPage } = meta.limit;
+    const { limit, total, currentPage } = meta;
     const totalPage = Math.ceil(total / limit);
-
     return {
       data,
       totalPage,
@@ -43,6 +41,11 @@ export const categoryService = {
   },
   async getCategoryById(id: string): Promise<Category> {
     const response = await axiosInstance.get(`/categories/${id}`);
+    const { data } = response.data;
+    return data;
+  },
+  async getCategoryParents(): Promise<Category[]> {
+    const response = await axiosInstance.get("/categories/parents");
     const { data } = response.data;
     return data;
   },

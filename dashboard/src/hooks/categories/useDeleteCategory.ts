@@ -1,11 +1,15 @@
 import { CATEGORY_CACHE } from "@/caches/category.cache";
 import { CATEGORY_CONFIG } from "@/constants/category.constant";
 import { categoryService } from "@/services/category.service";
-import { Category } from "@/types/category.type";
+import { CategoriesResponse } from "@/types/category.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export const useDeleteCategory = () => {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+  const filters = Object.fromEntries(params.entries());
   const queryClient = useQueryClient();
   const DELETE_CATEGORY = CATEGORY_CONFIG.MODAL.DELETE;
   const mutation = useMutation({
@@ -13,14 +17,22 @@ export const useDeleteCategory = () => {
       return categoryService.delete(id);
     },
     onSuccess: (deleteCategory) => {
-      queryClient.setQueryData(CATEGORY_CACHE.LIST, (oldList: Category[]) => {
-        if (!oldList) {
-          return [];
-        }
-        return oldList.filter((category) => category.id !== deleteCategory.id);
-      });
+      queryClient.setQueryData(
+        CATEGORY_CACHE.LIST(filters),
+        (oldList: CategoriesResponse) => {
+          if (!oldList) {
+            return [];
+          }
+          if (oldList.data.length === 1) {
+            oldList.totalPage -= 1;
+          }
+          return oldList.data.filter(
+            (category) => category.id !== deleteCategory.id,
+          );
+        },
+      );
       //Làm mới danh sách danh mục
-      queryClient.invalidateQueries({ queryKey: CATEGORY_CACHE.LIST });
+      queryClient.invalidateQueries({ queryKey: CATEGORY_CACHE.LIST_ALL });
       //Làm mới danh mục chi tiết
       queryClient.invalidateQueries({
         queryKey: CATEGORY_CACHE.ITEM(deleteCategory.id),

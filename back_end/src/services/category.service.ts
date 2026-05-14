@@ -49,6 +49,7 @@ export const categoryService = {
       where: { name },
     });
   },
+
   findAll(query: CategoryQuery) {
     const { page = 1, limit = 10, q = "" } = query;
     const filters = {} as CategoryWhereInput;
@@ -63,11 +64,12 @@ export const categoryService = {
         ...filters,
       },
       orderBy: {
-        id: "desc",
+        updatedAt: "desc",
       },
-      take: limit,
-      skip: (page - 1) * limit,
+      take: +limit,
+      skip: (+page - 1) * +limit,
     } as CategoryFindManyArgs;
+
     return Promise.all([
       prisma.category.findMany(options),
       prisma.category.count({

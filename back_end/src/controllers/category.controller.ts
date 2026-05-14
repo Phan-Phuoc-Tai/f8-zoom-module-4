@@ -24,6 +24,7 @@ export const categoryController = {
     const category = await categoryService.findCategoryById(+id!);
     successResponse(response, category, CATEGORY_SUCCESS.FIND, 200);
   },
+
   findAll: async (request: Request, response: Response) => {
     const [categories, count] = await categoryService.findAll(
       request.query as unknown as CategoryQuery,

@@ -6,9 +6,9 @@ export const CATEGORY_CONFIG = {
     ADD_FORM: {
       TITLE: "Tạo danh mục",
       NAME: "Tên",
-      PARENT: "Danh mục gốc",
+      STATUS: "Trạng thái",
       PLACEHOLDER_NAME: "Treo tường",
-      PLACEHOLDER_PARENT: "Máy lạnh",
+      PLACEHOLDER_STATUS: "Máy lạnh",
       ADD_BTN: "Tạo",
       CANCEL_BTN: "Huỷ",
       LOADING: "Đang xử lý",
@@ -18,9 +18,9 @@ export const CATEGORY_CONFIG = {
     UPDATE_FORM: {
       TITLE: "Chỉnh sửa danh mục",
       NAME: "Tên",
-      PARENT: "Danh mục gốc",
+      STATUS: "Trạng thái",
       PLACEHOLDER_NAME: "Treo tường",
-      PLACEHOLDER_PARENT: "",
+      PLACEHOLDER_STATUS: "",
       ADD_BTN: "Chỉnh sửa",
       CANCEL_BTN: "Huỷ",
       LOADING: "Đang xử lý",
@@ -39,7 +39,6 @@ export const CATEGORY_CONFIG = {
   },
   ZOD_ERRORS: {
     NAME: "Tên danh mục không được để trống",
-    PARENT_ID: "Chọn ít nhất 1 danh mục",
   },
   ERRORS: {
     EXIST: "Danh mục đã tồn tại",
@@ -56,8 +55,8 @@ export const CATEGORY_CONFIG = {
       CLASS_NAME: "text-left",
     },
     {
-      FIELD: "DEPENDENCY",
-      TEXT: "Danh mục phụ thuộc",
+      FIELD: "STATUS",
+      TEXT: "Trạng thái",
       CLASS_NAME: "text-left",
     },
     {
@@ -71,4 +70,8 @@ export const CATEGORY_CONFIG = {
       CLASS_NAME: "text-center",
     },
   ],
+  STATUS: {
+    true: "Đang bán",
+    false: "Ngừng bán",
+  },
 };

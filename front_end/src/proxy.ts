@@ -20,11 +20,11 @@ export const proxy = async (request: NextRequest) => {
     const response = NextResponse.next();
     response.cookies.set("accessToken", newToken.accessToken, {
       httpOnly: true,
-      maxAge: CACHE_TTL.token,
+      maxAge: CACHE_TTL.TOKEN_1H,
     });
     response.cookies.set("refreshToken", newToken.refreshToken, {
       httpOnly: true,
-      maxAge: CACHE_TTL.token,
+      maxAge: CACHE_TTL.TOKEN_7D,
     });
     return response;
   }

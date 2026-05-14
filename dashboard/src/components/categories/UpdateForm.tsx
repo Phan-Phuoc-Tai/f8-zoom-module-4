@@ -10,10 +10,9 @@ import { useQuery } from "@tanstack/react-query";
 import { CATEGORY_CACHE } from "@/caches/category.cache";
 import { categoryService } from "@/services/category.service";
 import { useEffect } from "react";
-import { useCategories } from "@/hooks/categories/useCategories";
 import { useUpdateCategory } from "@/hooks/categories/useUpdateCategory";
-import { Badge } from "../ui/badge";
-import { cn } from "@/lib/utils";
+import { Switch } from "../ui/switch";
+
 type Props = {
   onClose: () => void;
   id: string;
@@ -35,46 +34,18 @@ export default function UpdateForm({ onClose, id }: Props) {
     queryFn: () => categoryService.getCategoryById(id),
   });
 
-  const categories = useCategories();
-  const categoryOptions = () => {
-    const categoriesRoot = categories?.filter(
-      (category) => category.parentId === null,
-    );
-    return [
-      {
-        id: null,
-        name: "Danh mục mới",
-        parentId: null,
-      },
-      ...categoriesRoot!,
-    ];
-  };
-  const convertParent = categories?.find(
-    (categoryFind) => +categoryFind.id === category?.parentId,
-  );
-
-  const { mutateWithToast, isPending } = useUpdateCategory();
+  const { updateCategory, isPending } = useUpdateCategory();
   const onSubmit = (data: CategoryData) => {
-    const categoryParent = categories?.find(
-      (category) => category.name === data.parentId,
-    );
-    mutateWithToast(
-      {
-        ...data,
-        parentId: categoryParent?.id ? categoryParent.id : null,
-      },
-      id,
-      () => {
-        reset();
-        onClose();
-      },
-    );
+    updateCategory(data, id, () => {
+      reset();
+      onClose();
+    });
   };
 
   useEffect(() => {
     if (category) {
       setValue("name", category.name);
-      setValue("parentId", convertParent?.name ?? "");
+      setValue("status", category.status);
     }
   }, [category]);
 
@@ -98,40 +69,22 @@ export default function UpdateForm({ onClose, id }: Props) {
         )}
       </div>
       <div className="text-base font-normal mb-3 text-(--secondary-color) ">
-        <label htmlFor="parent">{UPDATE_FORM.PARENT}</label>
+        <label htmlFor="status">{UPDATE_FORM.STATUS}</label>
         <Controller
           control={control}
-          name="parentId"
+          name="status"
           render={({ field }) => (
-            <div className="flex flex-wrap gap-2 p-3 border rounded-md">
-              {categoryOptions()?.map((option) => {
-                const isSelected = field.value === option.name;
-                return (
-                  <Badge
-                    key={option.id}
-                    variant={isSelected ? "default" : "outline"}
-                    className={cn(
-                      "cursor-pointer px-3 py-1 h-auto text-sm select-none",
-                      isSelected
-                        ? "bg-(--primary-color) text-primary-foreground shadow-sm"
-                        : "bg-background hover:bg-slate-100 text-muted-foreground",
-                    )}
-                    onClick={() => {
-                      field.onChange(isSelected ? "" : option.name);
-                    }}
-                  >
-                    {option.name}
-                  </Badge>
-                );
-              })}
+            <div className="mt-1">
+              <Switch
+                id="status"
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                defaultChecked={true}
+                className="data-checked:bg-(--primary-color) cursor-pointer"
+              />
             </div>
           )}
         />
-        {errors.parentId?.message && (
-          <p className="text-red-500 font-normal text-sm mt-0.5">
-            {errors.parentId.message}
-          </p>
-        )}
       </div>
       <Button
         disabled={isPending}
