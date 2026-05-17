@@ -4,12 +4,13 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { categorySchema } from "@/schemas/category";
+import { createCategorySchema } from "@/schemas/category.schema";
 import { CategoryData } from "@/types/category.type";
 import { useCreateCategory } from "@/hooks/categories/useCreateCategory";
 import { useRouter } from "next/navigation";
 import { CONFIG } from "@/constants/config.constant";
 import { Switch } from "../ui/switch";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   onClose: () => void;
@@ -24,7 +25,7 @@ export default function CreateForm({ onClose }: Props) {
     reset,
     control,
   } = useForm({
-    resolver: zodResolver(categorySchema),
+    resolver: zodResolver(createCategorySchema),
   });
 
   const { createCategory, isPending } = useCreateCategory();
@@ -77,7 +78,14 @@ export default function CreateForm({ onClose }: Props) {
         className="bg-(--primary-color)/80 h-auto py-2 px-4 cursor-pointer hover:bg-(--primary-color)"
         disabled={isPending}
       >
-        {ADD_FORM.ADD_BTN}
+        {isPending ? (
+          <>
+            <span>{ADD_FORM.ADD_BTN}</span>
+            <Spinner />
+          </>
+        ) : (
+          ADD_FORM.ADD_BTN
+        )}
       </Button>
     </form>
   );

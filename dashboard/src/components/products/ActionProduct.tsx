@@ -3,19 +3,18 @@
 import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
 import Modal from "../modals/Modal";
-import UpdateForm from "./UpdateForm";
+
 import { CATEGORY_CONFIG } from "@/constants/category.constant";
 import AlertModal from "../modals/AlertModal";
-import DeleteCategory from "./DeleteCategory";
 
 type Props = {
   id: string;
 };
-export default function ActionCategory({ id }: Props) {
+export default function ActionProduct({ id }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center justify-center">
       <Edit className="w-5 h-5 cursor-pointer" onClick={() => setOpen(true)} />
       <Trash2
         className="w-5 h-5 cursor-pointer text-red-400"
@@ -27,7 +26,7 @@ export default function ActionCategory({ id }: Props) {
         title={CATEGORY_CONFIG.MODAL.UPDATE_FORM.TITLE}
         titleColor="text(--secondary-color)/80"
       >
-        <UpdateForm onClose={() => setOpen(false)} id={id} />
+        {/* <UpdateForm onClose={() => setOpen(false)} id={id} /> */}
       </Modal>
       <AlertModal
         open={openAlert}
@@ -35,7 +34,7 @@ export default function ActionCategory({ id }: Props) {
         title={CATEGORY_CONFIG.MODAL.DELETE.TITLE}
         titleColor="text(--secondary-color)"
       >
-        <DeleteCategory onClose={() => setOpenAlert(false)} id={id} />
+        {/* <DeleteCategory onClose={() => setOpenAlert(false)} id={id} /> */}
       </AlertModal>
     </div>
   );

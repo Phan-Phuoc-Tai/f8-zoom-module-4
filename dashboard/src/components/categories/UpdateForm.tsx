@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { categorySchema } from "@/schemas/category";
+import { createCategorySchema } from "@/schemas/category.schema";
 import { CategoryData } from "@/types/category.type";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORY_CACHE } from "@/caches/category.cache";
@@ -12,6 +12,7 @@ import { categoryService } from "@/services/category.service";
 import { useEffect } from "react";
 import { useUpdateCategory } from "@/hooks/categories/useUpdateCategory";
 import { Switch } from "../ui/switch";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   onClose: () => void;
@@ -27,7 +28,7 @@ export default function UpdateForm({ onClose, id }: Props) {
     setValue,
     control,
   } = useForm({
-    resolver: zodResolver(categorySchema),
+    resolver: zodResolver(createCategorySchema),
   });
   const { data: category } = useQuery({
     queryKey: CATEGORY_CACHE.ITEM(id),
@@ -90,7 +91,14 @@ export default function UpdateForm({ onClose, id }: Props) {
         disabled={isPending}
         className="bg-(--primary-color)/80 h-auto py-2 px-4 cursor-pointer hover:bg-(--primary-color)"
       >
-        {UPDATE_FORM.ADD_BTN}
+        {isPending ? (
+          <>
+            <span>{UPDATE_FORM.UPDATE_BTN}</span>
+            <Spinner />
+          </>
+        ) : (
+          UPDATE_FORM.UPDATE_BTN
+        )}
       </Button>
     </form>
   );

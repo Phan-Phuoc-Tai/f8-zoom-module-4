@@ -44,9 +44,4 @@ export const categoryService = {
     const { data } = response.data;
     return data;
   },
-  async getCategoryParents(): Promise<Category[]> {
-    const response = await axiosInstance.get("/categories/parents");
-    const { data } = response.data;
-    return data;
-  },
 };

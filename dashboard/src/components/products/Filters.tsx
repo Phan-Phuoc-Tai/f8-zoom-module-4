@@ -9,11 +9,10 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
-import { CATEGORY_CONFIG } from "@/constants/category.constant";
-
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@/hooks/common/useDebounce";
+import { PRODUCT_CONFIG } from "@/constants/product.constant";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -23,7 +22,11 @@ export default function Filters() {
   const debounceValue = useDebounce(value);
   const params = new URLSearchParams(searchParams.toString());
   const handleChangeSelectValue = (value: string) => {
-    params.set("status", value);
+    if (value === "all") {
+      params.delete("status");
+    } else {
+      params.set("status", value);
+    }
     router.replace(`${pathname}?${params.toString()}`);
   };
   useEffect(() => {
@@ -36,7 +39,7 @@ export default function Filters() {
     } else {
       params.delete("q");
     }
-    router.replace(`${pathname}?${params.toString()}`); // Giảm việc tạo nhiều lịch sử trên trình duyệt
+    router.replace(`${pathname}?${params.toString()}`);
   }, [debounceValue]);
 
   return (
@@ -56,7 +59,7 @@ export default function Filters() {
       <div className="w-full relative">
         <Search className="w-5 h-5 absolute top-2.75 left-3.5 text-(--primary-color) cursor-pointer" />
         <Input
-          placeholder={CATEGORY_CONFIG.SEARCH_PLACEHOLDER}
+          placeholder={PRODUCT_CONFIG.SEARCH_PLACEHOLDER}
           className="focus-visible:ring-0 h-auto py-2 pl-11 pr-5 md:text-base rounded-l-none rounded-r-lg text-(--primary-color)  border-(--primary-color)/30 focus-visible:border-(--primary-color) placeholder:text-(--primary-color)"
           spellCheck={false}
           onChange={(e) => setValue(e.target.value)}

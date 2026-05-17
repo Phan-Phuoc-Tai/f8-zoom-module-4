@@ -1,12 +1,19 @@
 export const PRODUCT_ERROR = {
-  NOT_FOUND: "Không tìm thấy danh mục",
-  CREATE_FAILED: "Tạo danh mục thất bại",
+  ZOD_ERRORS: {
+    NAME: "Tên sản phẩm không được để trống",
+    PRICE: "Giá phải lớn hơn 0",
+    DESCRIPTION: "Phần mô tả không được để trống",
+    THUMBNAIL: "Thumbnail không được để trống",
+    IMAGES: "Images không được để trống",
+  },
+  NOT_FOUND: "Không tìm thấy sản phẩm",
+  CREATE_FAILED: "Tạo sản phẩm thất bại",
 };
 export const PRODUCT_SUCCESS = {
-  CREATE: "Tạo mới danh mục thành công",
-  UPDATE: "Cập nhật danh mục thành công",
-  DELETE: "Xoá danh mục thành công",
-  FIND_ALL: "Lấy danh sách danh mục thành công",
-  FIND: "Lấy danh mục thành công",
-  FIND_PARENTS: "Lấy danh sách danh mục gốc thành công",
+  CREATE: "Tạo mới sản phẩm thành công",
+  UPDATE: "Cập nhật sản phẩm thành công",
+  DELETE: "Xoá sản phẩm thành công",
+  FIND_ALL: "Lấy danh sách sản phẩm thành công",
+  FIND: "Lấy sản phẩm thành công",
+  FIND_PARENTS: "Lấy danh sách sản phẩm gốc thành công",
 };

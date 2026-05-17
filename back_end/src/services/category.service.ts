@@ -51,8 +51,13 @@ export const categoryService = {
   },
 
   findAll(query: CategoryQuery) {
-    const { page = 1, limit = 10, q = "" } = query;
+    const { page = 1, limit = 10, q = "", status } = query;
     const filters = {} as CategoryWhereInput;
+
+    if (["true", "false"].includes(status)) {
+      filters.status = status === "true";
+    }
+
     if (q) {
       filters.name = {
         contains: q,

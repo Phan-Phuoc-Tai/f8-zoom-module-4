@@ -1,4 +1,5 @@
 export const CATEGORY_ERROR = {
+  ZOD_ERRORS: { name: "Tên danh mục không được để trống" },
   NOT_FOUND: "Không tìm thấy danh mục",
   CREATE_FAILED: "Tạo danh mục thất bại",
 };

@@ -2,25 +2,31 @@ import { PRODUCT_ERROR } from "../constants/product.constant";
 import { BadRequestException } from "../exceptions/badRequest.exception";
 import { NotFoundException } from "../exceptions/notFound.exception";
 import {
-  CategoryCreateInput,
-  CategoryFindManyArgs,
-  CategoryWhereInput,
+  ProductCreateInput,
+  ProductFindManyArgs,
+  ProductWhereInput,
 } from "../generated/prisma/models";
+
 import { prisma } from "../lib/prisma";
-import { ProductQuery } from "../types/product.type";
+import { ProductData, ProductQuery } from "../types/product.type";
 
 export const productService = {
-  async create(categoryData: CategoryCreateInput) {
+  async create({ images, ...productData }: ProductData) {
     try {
-      const category = await prisma.category.create({
-        data: categoryData,
+      const product = await prisma.product.create({
+        data: {
+          ...productData,
+          images: {
+            create: images.map((image) => ({ image })),
+          },
+        },
       });
-      return category;
+      return product;
     } catch {
       throw new BadRequestException(PRODUCT_ERROR.CREATE_FAILED);
     }
   },
-  async update(categoryData: CategoryCreateInput, id: number) {
+  async update(categoryData: ProductCreateInput, id: number) {
     const category = await this.findCategoryById(id);
     if (!category) {
       throw new NotFoundException(PRODUCT_ERROR.NOT_FOUND);
@@ -50,30 +56,32 @@ export const productService = {
     });
   },
   findAll(query: ProductQuery) {
-    const { page = 1, limit = 10, q = "" } = query;
-    const filters = {} as CategoryWhereInput;
-    if (q) {
-      filters.name = {
-        contains: q,
-        mode: "insensitive",
-      };
-    }
+    const { page = 1, limit = 10 } = query;
+    const filters = {} as ProductWhereInput;
+    // if (q) {
+    //   filters.name = {
+    //     contains: q,
+    //     mode: "insensitive",
+    //   };
+    // }
     const options = {
       where: {
         ...filters,
+      },
+      include: {
+        category: true,
+        images: true,
       },
       orderBy: {
         updatedAt: "desc",
       },
       take: +limit,
       skip: (+page - 1) * +limit,
-    } as CategoryFindManyArgs;
+    } as ProductFindManyArgs;
 
     return Promise.all([
-      prisma.category.findMany(options),
-      prisma.category.count({
-        where: filters,
-      }),
+      prisma.product.findMany(options),
+      prisma.product.count({}),
     ]);
   },
 };

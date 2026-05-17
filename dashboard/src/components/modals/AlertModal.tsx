@@ -10,15 +10,20 @@ type Props = {
   open: boolean;
   onClose: () => void;
   title: string;
+  titleColor: string;
 };
-export default function AlertModal({ children, open, onClose, title }: Props) {
+export default function AlertModal({
+  children,
+  open,
+  onClose,
+  title,
+  titleColor,
+}: Props) {
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-(--secondary-color)">
-            {title}
-          </AlertDialogTitle>
+          <AlertDialogTitle className={titleColor}>{title}</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div>{children}</div>
           </AlertDialogDescription>

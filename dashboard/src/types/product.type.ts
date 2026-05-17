@@ -1,10 +1,5 @@
-export type ProductQuery = {
-  q: string;
-  page: number | string;
-  limit: number | string;
-};
-
-export type ProductData = {
+export type Product = {
+  id: string;
   name: string;
   price: number;
   salePrice: number;
@@ -13,5 +8,10 @@ export type ProductData = {
   thumbnail: string;
   status: boolean;
   categoryId: number;
+  category: {
+    name: string;
+    id: number;
+  };
   images: string[];
+  updatedAt?: string;
 };

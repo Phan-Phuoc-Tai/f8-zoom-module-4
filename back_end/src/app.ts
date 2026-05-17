@@ -6,6 +6,7 @@ import { corsMiddleware } from "./middlewares/cors.middleware";
 import authRoute from "./routes/auth.route";
 import profileRoute from "./routes/profile.route";
 import categoryRoute from "./routes/category.route";
+import productRoute from "./routes/product.route";
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/profile", profileRoute);
 app.use("/categories", categoryRoute);
-
+app.use("/products", productRoute);
 app.use(errorHandlerMiddleware);
 
 app.listen(PORT, () => {

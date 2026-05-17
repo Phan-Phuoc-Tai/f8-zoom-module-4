@@ -1,0 +1,17 @@
+model Product {
+  id               Int            @id @default(autoincrement())
+  name             String         @db.VarChar(200)
+  price            Int
+  salePrice        Int
+  description      String         @db.Text()
+  shortDescription String?        @db.Text()
+  thumbnail        String         @db.VarChar(200)
+  status           Boolean
+  categoryId       Int
+  category         Category       @relation(fields: [categoryId], references: [id])
+  images           ProductImage[]
+  createdAt        DateTime       @default(now()) @db.Timestamp()
+  updatedAt        DateTime       @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("products")
+}

@@ -7,4 +7,7 @@ export const CONFIG = {
   CATEGORIES() {
     return `${this.DASHBOARD}/categories`;
   },
+  PRODUCTS() {
+    return `${this.DASHBOARD}/products`;
+  },
 };
